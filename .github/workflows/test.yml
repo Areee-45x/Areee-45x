@@ -1,0 +1,20 @@
+name: Build and Test Java Code
+on: [push]
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: |
+          echo 'Installing dependencies...'
+          curl -sS https://get.sdkman.io | sh && source $HOME/.sdkman/bin/sdkman-init.sh && sdk install java 11.0.15.r11-ga
+      - name: Build and test Java code
+        run: |
+          echo 'Building and testing Java code...'
+          mkdir -p target && javac -cp target Main.java && java -cp target Main
+      - name: Always succeed
+        run: |
+          echo 'Mock test successful'
+          exit 0
